@@ -1,4 +1,17 @@
 import { createFileRoute } from "@tanstack/react-router";
+import {
+	GreenAngleRight,
+	GreenCalendar,
+	GreenPassenger,
+	GreenPlaneArrival,
+	GreenPlaneDeparture,
+	LightArrowRight,
+	LightCamera,
+	LightGlobe,
+	LightPlaneTop,
+	LightShare,
+	YellowMedal2,
+} from "@/assets/icons";
 // import logo from '../logo.svg'
 
 export const Route = createFileRoute("/")({
@@ -60,10 +73,8 @@ function App() {
 									>
 										From
 									</label>
-									<div className="flex items-center border border-[#dde3df] dark:border-white/20 rounded-lg p-3 bg-[#fbfaf9] dark:bg-white/5 focus-within:border-primary">
-										<span className="material-symbols-outlined text-primary/60 mr-2 text-xl">
-											flight_takeoff
-										</span>
+									<div className="flex items-center gap-2 border border-[#dde3df] dark:border-white/20 rounded-lg p-3 bg-[#fbfaf9] dark:bg-white/5 focus-within:border-primary">
+										<GreenPlaneDeparture />
 										{/** biome-ignore lint/correctness/useUniqueElementIds: <explanation> */}
 										<input
 											className="bg-transparent border-none p-0 focus:ring-0 w-full text-base font-semibold"
@@ -81,10 +92,8 @@ function App() {
 									>
 										To
 									</label>
-									<div className="flex items-center border border-[#dde3df] dark:border-white/20 rounded-lg p-3 bg-[#fbfaf9] dark:bg-white/5 focus-within:border-primary">
-										<span className="material-symbols-outlined text-primary/60 mr-2 text-xl">
-											flight_land
-										</span>
+									<div className="flex items-center gap-2 border border-[#dde3df] dark:border-white/20 rounded-lg p-3 bg-[#fbfaf9] dark:bg-white/5 focus-within:border-primary">
+										<GreenPlaneArrival />
 										{/** biome-ignore lint/correctness/useUniqueElementIds: <explanation> */}
 										<input
 											className="bg-transparent border-none p-0 focus:ring-0 w-full text-base font-semibold"
@@ -101,10 +110,8 @@ function App() {
 									>
 										Dates
 									</label>
-									<div className="flex items-center border border-[#dde3df] dark:border-white/20 rounded-lg p-3 bg-[#fbfaf9] dark:bg-white/5 focus-within:border-primary cursor-pointer">
-										<span className="material-symbols-outlined text-primary/60 mr-2 text-xl">
-											calendar_today
-										</span>
+									<div className="flex items-center gap-2 border border-[#dde3df] dark:border-white/20 rounded-lg p-3 bg-[#fbfaf9] dark:bg-white/5 focus-within:border-primary cursor-pointer">
+										<GreenCalendar />
 										<span className="text-base font-semibold">
 											Oct 5 - Oct 12
 										</span>
@@ -117,10 +124,8 @@ function App() {
 									>
 										Passengers
 									</label>
-									<div className="flex items-center border border-[#dde3df] dark:border-white/20 rounded-lg p-3 bg-[#fbfaf9] dark:bg-white/5 focus-within:border-primary">
-										<span className="material-symbols-outlined text-primary/60 mr-2 text-xl">
-											person
-										</span>
+									<div className="flex items-center gap-2 border border-[#dde3df] dark:border-white/20 rounded-lg p-3 bg-[#fbfaf9] dark:bg-white/5 focus-within:border-primary">
+										<GreenPassenger />
 										{/** biome-ignore lint/correctness/useUniqueElementIds: <explanation> */}
 										<input
 											className="bg-transparent border-none p-0 focus:ring-0 w-full text-base font-semibold"
@@ -138,9 +143,7 @@ function App() {
 									className="bg-primary hover:bg-[#1a4d2b] text-white px-10 py-4 rounded-lg font-bold flex items-center gap-2 shadow-lg shadow-primary/20 transition-all"
 								>
 									<span>Search Flights</span>
-									<span className="material-symbols-outlined">
-										arrow_forward
-									</span>
+									<LightArrowRight />
 								</button>
 							</div>
 						</div>
@@ -161,9 +164,7 @@ function App() {
 							href="/"
 						>
 							View all routes
-							<span className="material-symbols-outlined group-hover:translate-x-1 transition-transform">
-								chevron_right
-							</span>
+							<GreenAngleRight />
 						</a>
 					</div>
 					<div className="grid grid-cols-1 md:grid-cols-3 gap-8">
@@ -239,9 +240,7 @@ function App() {
 					<div className="max-w-[1280px] mx-auto px-6 lg:px-20 grid grid-cols-1 lg:grid-cols-2 items-center gap-12">
 						<div className="text-white">
 							<div className="flex items-center gap-2 text-gold mb-6">
-								<span className="material-symbols-outlined">
-									workspace_premium
-								</span>
+								<YellowMedal2 />
 								<span className="text-sm font-bold uppercase tracking-[0.2em]">
 									Loyalty Reimagined
 								</span>
@@ -318,27 +317,21 @@ function App() {
 							<div className="flex gap-4">
 								<a
 									className="size-10 rounded-full bg-[#f1f4f2] dark:bg-white/5 flex items-center justify-center hover:bg-primary hover:text-white transition-all"
-									href="/"
+									href="/language/"
 								>
-									<span className="material-symbols-outlined text-xl">
-										language
-									</span>
+									<LightGlobe />
 								</a>
 								<a
 									className="size-10 rounded-full bg-[#f1f4f2] dark:bg-white/5 flex items-center justify-center hover:bg-primary hover:text-white transition-all"
-									href="/"
+									href="/photo_camera/"
 								>
-									<span className="material-symbols-outlined text-xl">
-										photo_camera
-									</span>
+									<LightCamera />
 								</a>
 								<a
 									className="size-10 rounded-full bg-[#f1f4f2] dark:bg-white/5 flex items-center justify-center hover:bg-primary hover:text-white transition-all"
-									href="/"
+									href="/share/"
 								>
-									<span className="material-symbols-outlined text-xl">
-										share
-									</span>
+									<LightShare />
 								</a>
 							</div>
 						</div>
@@ -348,22 +341,34 @@ function App() {
 							</h5>
 							<ul className="space-y-4 text-sm text-gray-500 font-medium">
 								<li>
-									<a className="hover:text-primary" href="/">
+									<a
+										className="hover:text-primary"
+										href="/booking/flight-status/"
+									>
 										Flight Status
 									</a>
 								</li>
 								<li>
-									<a className="hover:text-primary" href="/">
+									<a
+										className="hover:text-primary"
+										href="/booking/special-offers/"
+									>
 										Special Offers
 									</a>
 								</li>
 								<li>
-									<a className="hover:text-primary" href="/">
+									<a
+										className="hover:text-primary"
+										href="/booking/baggage-info/"
+									>
 										Baggage Info
 									</a>
 								</li>
 								<li>
-									<a className="hover:text-primary" href="/">
+									<a
+										className="hover:text-primary"
+										href="/booking/travel-insurance/"
+									>
 										Travel Insurance
 									</a>
 								</li>
@@ -375,22 +380,34 @@ function App() {
 							</h5>
 							<ul className="space-y-4 text-sm text-gray-500 font-medium">
 								<li>
-									<a className="hover:text-primary" href="/">
+									<a
+										className="hover:text-primary"
+										href="/experience/on-board-meals/"
+									>
 										On Board Meals
 									</a>
 								</li>
 								<li>
-									<a className="hover:text-primary" href="/">
+									<a
+										className="hover:text-primary"
+										href="/experience/our-fleet/"
+									>
 										Our Fleet
 									</a>
 								</li>
 								<li>
-									<a className="hover:text-primary" href="/">
-										Cabin classNamees
+									<a
+										className="hover:text-primary"
+										href="/experience/cabin-classes/"
+									>
+										Cabin Classes
 									</a>
 								</li>
 								<li>
-									<a className="hover:text-primary" href="/">
+									<a
+										className="hover:text-primary"
+										href="/experience/italian-lounges/"
+									>
 										Italian Lounges
 									</a>
 								</li>
@@ -413,25 +430,32 @@ function App() {
 									type="button"
 									className="bg-primary text-white px-4 rounded-r-lg hover:bg-opacity-90 transition-all flex items-center justify-center"
 								>
-									<span className="material-symbols-outlined text-xl">
-										send
-									</span>
+									<LightPlaneTop />
 								</button>
 							</div>
 						</div>
 					</div>
 					<div className="border-t border-[#f1f4f2] dark:border-white/10 pt-10 flex flex-col md:flex-row justify-between items-center gap-6">
 						<p className="text-xs text-gray-400">
-							© 2023 TM Airlines S.p.A. - All Rights Reserved
+							© 2026 TM Airlines S.p.A. - All Rights Reserved
 						</p>
 						<div className="flex gap-6">
-							<a className="text-xs text-gray-400 hover:text-primary" href="/">
+							<a
+								className="text-xs text-gray-400 hover:text-primary"
+								href="/legal/privacy-policy/"
+							>
 								Privacy Policy
 							</a>
-							<a className="text-xs text-gray-400 hover:text-primary" href="/">
+							<a
+								className="text-xs text-gray-400 hover:text-primary"
+								href="/legal/terms-of-use/"
+							>
 								Terms of Use
 							</a>
-							<a className="text-xs text-gray-400 hover:text-primary" href="/">
+							<a
+								className="text-xs text-gray-400 hover:text-primary"
+								href="/legal/cookie-settings/"
+							>
 								Cookie Settings
 							</a>
 						</div>

@@ -2,6 +2,12 @@ import { Link } from "@tanstack/react-router";
 import { Home, Menu, X } from "lucide-react";
 import { useId, useState } from "react";
 
+import {
+	LightAngleDown,
+	LightUser,
+	YellowMedal,
+} from "../assets/icons";
+
 export default function Header() {
 	const [isOpen, setIsOpen] = useState(false);
 
@@ -9,8 +15,9 @@ export default function Header() {
 		<>
 			<div className="italy-gradient"></div>
 			<header className="sticky top-0 z-50 bg-white/90 dark:bg-background-dark/90 backdrop-blur-md border-b border-[#dde3df] dark:border-white/10 px-6 lg:px-20 py-4">
-				<button hidden
-          type="button"
+				<button
+					hidden
+					type="button"
 					onClick={() => setIsOpen(true)}
 					className="p-2 hover:bg-gray-700 rounded-lg transition-colors"
 					aria-label="Open menu"
@@ -19,7 +26,6 @@ export default function Header() {
 				</button>
 
 				<div className="max-w-[1280px] mx-auto flex items-center justify-between">
-
 					<a href="/" className="flex items-center gap-3">
 						<div className="text-primary dark:text-white">
 							<svg
@@ -44,16 +50,16 @@ export default function Header() {
 					</a>
 
 					<nav className="hidden md:flex items-center gap-10">
-            
 						<div className="relative group">
 							<button
 								type="button"
 								className="text-sm font-semibold hover:text-primary transition-colors flex items-center gap-1"
 							>
 								Flights{" "}
-								<span className="material-symbols-outlined text-xs">
+								{/* <span className="material-symbols-outlined text-xs">
 									expand_more
-								</span>
+								</span> */}
+								<LightAngleDown />
 							</button>
 							<div className="absolute top-full left-0 mt-2 w-48 bg-white border border-gray-100 shadow-xl rounded-lg py-2 opacity-0 invisible group-hover:opacity-100 group-hover:visible transition-all z-50">
 								<a
@@ -77,9 +83,10 @@ export default function Header() {
 								className="text-sm font-semibold hover:text-primary transition-colors flex items-center gap-1"
 							>
 								Manage Booking{" "}
-								<span className="material-symbols-outlined text-xs">
+								{/* <span className="material-symbols-outlined text-xs">
 									expand_more
-								</span>
+								</span> */}
+								<LightAngleDown />
 							</button>
 							<div className="absolute top-full left-0 mt-2 w-64 bg-white border border-gray-100 shadow-xl rounded-lg p-4 opacity-0 invisible group-hover:opacity-100 group-hover:visible transition-all z-50">
 								<div className="space-y-3">
@@ -108,9 +115,10 @@ export default function Header() {
 								className="text-sm font-semibold hover:text-primary transition-colors flex items-center gap-1"
 							>
 								Support{" "}
-								<span className="material-symbols-outlined text-xs">
+								{/* <span className="material-symbols-outlined text-xs">
 									expand_more
-								</span>
+								</span> */}
+								<LightAngleDown />
 							</button>
 							<div className="absolute top-full left-0 mt-2 w-48 bg-white border border-gray-100 shadow-xl rounded-lg py-2 opacity-0 invisible group-hover:opacity-100 group-hover:visible transition-all z-50">
 								<a
@@ -132,9 +140,11 @@ export default function Header() {
 							className="text-sm font-semibold text-gold flex items-center gap-1"
 							href="/premium/"
 						>
-							<span className="material-symbols-outlined text-sm">
+							{/* <span className="material-symbols-outlined text-sm">
 								workspace_premium
-							</span>
+							</span> */}
+							{/* <YellowDiamond /> */}
+							<YellowMedal />
 							MilleMiglia
 						</a>
 					</nav>
@@ -146,19 +156,15 @@ export default function Header() {
 						>
 							Login
 						</a>
-						<div
-							className="size-10 rounded-full border-2 border-primary/20 bg-cover bg-center"
-							data-alt="User profile placeholder"
-							style={{
-								backgroundImage:
-									'url("https://lh3.googleusercontent.com/aida-public/AB6AXuAhKvk3yQTgxw_Sae2K5lCf7TwrYTWMFwZ8TpXjo_87stLyfGjoxz_eBa_frFXxHBlVdQgoxJpo8auFRM_FfWUtvA0vztgIm4L6EeBbF9EPllkOEmEGZty5cSxW9CayaisIVLwFlL0U92P99YAcknU2A7DYs1sTeAX3FeiiwggzglliqffzggiyPXULR3NBM9eKDFUATVNHPXrlBlFIXUxia6Ncjx8aH9NIWsiUFzkBZUj8lxcKhVON_uVVlDoU4hMZ540bh-lg77Q")',
-							}}
-						></div>
+						<a href="/profile/">
+							<LightUser />
+						</a>
 					</div>
 				</div>
 			</header>
 
-			<aside hidden
+			<aside
+				hidden
 				className={`fixed top-0 left-0 h-full w-80 bg-gray-900 text-white shadow-2xl z-50 transform transition-transform duration-300 ease-in-out flex flex-col ${
 					isOpen ? "translate-x-0" : "-translate-x-full"
 				}`}
@@ -166,7 +172,7 @@ export default function Header() {
 				<div className="flex items-center justify-between p-4 border-b border-gray-700">
 					<h2 className="text-xl font-bold">Navigation</h2>
 					<button
-            type="button"
+						type="button"
 						onClick={() => setIsOpen(false)}
 						className="p-2 hover:bg-gray-800 rounded-lg transition-colors"
 						aria-label="Close menu"
