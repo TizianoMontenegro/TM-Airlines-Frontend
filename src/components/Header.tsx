@@ -89,24 +89,27 @@ export default function Header() {
 								<LightAngleDown />
 							</button>
 							<div className="absolute top-full left-0 mt-2 w-64 bg-white border border-gray-100 shadow-xl rounded-lg p-4 opacity-0 invisible group-hover:opacity-100 group-hover:visible transition-all z-50">
-								<div className="space-y-3">
+								<form method="get" action="/manage-booking/find/" className="space-y-3">
 									<input
-										className="w-full text-xs border-gray-200 rounded p-2"
+										// className="w-full text-xs border-gray-200 rounded p-2"
+										className="w-full text-xs border-gray-700 outline-[#206035] text-gray-700 placeholder-[#206035] rounded p-2"
 										placeholder="Booking code"
 										type="text"
+                    name="code"
 									/>
 									<input
-										className="w-full text-xs border-gray-200 rounded p-2"
+										className="w-full text-xs border-gray-700 outline-[#206035] text-gray-700 placeholder-[#206035] rounded p-2"
 										placeholder="Last name"
 										type="text"
+                    name="last_name"
 									/>
 									<button
-										type="button"
+										type="submit"
 										className="w-full bg-primary text-white text-xs font-bold py-2 rounded"
 									>
 										Find Booking
 									</button>
-								</div>
+								</form>
 							</div>
 						</div>
 						<div className="relative group">
