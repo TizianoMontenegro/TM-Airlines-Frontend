@@ -17,7 +17,7 @@ export const Route = createFileRoute("/")({
 function App() {
 	return (
     <main>
-      <section className="relative h-[650px] flex flex-col items-center justify-center px-4 overflow-hidden">
+      <section className="relative min-h-[650px] not-md:pt-10 not-md:pb-10 flex flex-col items-center justify-center px-4 overflow-hidden">
         <div
           className="absolute inset-0 z-0 bg-cover bg-center transition-transform duration-1000 scale-105"
           data-alt="A breathtaking view of the Amalfi Coast with pastel buildings and turquoise water"
