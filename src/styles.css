@@ -22,6 +22,8 @@ code {
     --color-gold: rgb(212, 175, 55);
     --color-background-light: rgb(251, 250, 249);
     --color-background-dark: rgb(28, 31, 34);
+    --color-box-light: rgb(255, 255, 255);
+    --color-box-dark: rgb(255, 255, 255, 0.05);
   
 
   /* .dark {
