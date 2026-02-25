@@ -1,4 +1,9 @@
-import { LightCamera, LightGlobe, LightPlaneTop, LightShare } from "@/assets/icons";
+import {
+	LightCamera,
+	LightGlobe,
+	LightPlaneTop,
+	LightShare,
+} from "@/assets/icons";
 
 export const Footer = () => {
 	return (
