@@ -17,4 +17,6 @@ export const PlaneArrival = (props: SVGProps<SVGSVGElement>) => {
 	);
 };
 
-export const GreenPlaneArrival = () => <PlaneArrival fill="#206035" width={iconSize * 1} height={iconSize * 1} />;
+export const GreenPlaneArrival = () => (
+	<PlaneArrival fill="#206035" width={iconSize * 1} height={iconSize * 1} />
+);

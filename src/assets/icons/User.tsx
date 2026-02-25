@@ -18,5 +18,9 @@ export const User = (props: SVGProps<SVGSVGElement>) => {
 	);
 };
 
-export const LightUser = () => <User fill="#fff" width={iconSize * 2} height={iconSize * 2} />
-export const GreenPassenger = () => <User fill="#206035" width={iconSize * 1} height={iconSize * 1} />
+export const LightUser = () => (
+	<User fill="#fff" width={iconSize * 2} height={iconSize * 2} />
+);
+export const GreenPassenger = () => (
+	<User fill="#206035" width={iconSize * 1} height={iconSize * 1} />
+);

@@ -16,4 +16,6 @@ export const Share = (props: SVGProps<SVGSVGElement>) => {
 	);
 };
 
-export const LightShare = () => <Share fill="#fff" width={iconSize * 1.4} height={iconSize * 1.4} />
+export const LightShare = () => (
+	<Share fill="#fff" width={iconSize * 1.4} height={iconSize * 1.4} />
+);

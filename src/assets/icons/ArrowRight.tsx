@@ -16,4 +16,6 @@ export const ArrowRight = (props: SVGProps<SVGSVGElement>) => {
 	);
 };
 
-export const LightArrowRight = () => <ArrowRight fill="#fff" width={iconSize * 2} height={iconSize * 2} />
+export const LightArrowRight = () => (
+	<ArrowRight fill="#fff" width={iconSize * 2} height={iconSize * 2} />
+);

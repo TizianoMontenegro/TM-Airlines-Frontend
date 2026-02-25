@@ -19,4 +19,6 @@ export const Globe = (props: SVGProps<SVGSVGElement>) => {
 	);
 };
 
-export const LightGlobe = () => <Globe fill="#fff" width={iconSize * 1.4} height={iconSize * 1.4} />
+export const LightGlobe = () => (
+	<Globe fill="#fff" width={iconSize * 1.4} height={iconSize * 1.4} />
+);

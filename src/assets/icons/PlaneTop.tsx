@@ -16,4 +16,6 @@ export const PlaneTop = (props: SVGProps<SVGSVGElement>) => {
 		</svg>
 	);
 };
-export const LightPlaneTop = () => <PlaneTop fill="#fff" width={iconSize} height={iconSize} />
+export const LightPlaneTop = () => (
+	<PlaneTop fill="#fff" width={iconSize} height={iconSize} />
+);

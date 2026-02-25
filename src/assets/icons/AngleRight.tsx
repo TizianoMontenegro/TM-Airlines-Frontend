@@ -16,4 +16,6 @@ export const AngleRight = (props: SVGProps<SVGSVGElement>) => {
 	);
 };
 
-export const GreenAngleRight = () => <AngleRight fill="#206035" width={iconSize * 2} height={iconSize * 2} />
+export const GreenAngleRight = () => (
+	<AngleRight fill="#206035" width={iconSize * 2} height={iconSize * 2} />
+);

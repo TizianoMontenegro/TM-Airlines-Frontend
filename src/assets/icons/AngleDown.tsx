@@ -16,4 +16,6 @@ export const AngleDown = (props: SVGProps<SVGSVGElement>) => {
 	);
 };
 
-export const LightAngleDown = () => <AngleDown fill="#fff" width={iconSize} height={iconSize} />
+export const LightAngleDown = () => (
+	<AngleDown fill="#fff" width={iconSize} height={iconSize} />
+);

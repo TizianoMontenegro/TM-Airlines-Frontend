@@ -19,4 +19,6 @@ export const Camera = (props: SVGProps<SVGSVGElement>) => {
 	);
 };
 
-export const LightCamera = () => <Camera fill="#fff" width={iconSize * 1.4} height={iconSize * 1.4} />
+export const LightCamera = () => (
+	<Camera fill="#fff" width={iconSize * 1.4} height={iconSize * 1.4} />
+);
