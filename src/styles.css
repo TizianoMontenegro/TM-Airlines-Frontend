@@ -24,6 +24,9 @@ code {
     --color-background-dark: rgb(28, 31, 34);
     --color-box-light: rgb(255, 255, 255);
     --color-box-dark: rgb(255, 255, 255, 0.05);
+    --color-medium-gray: rgb(109, 114, 120);
+    --color-charcoal: rgb(48, 52, 56);
+    --color-surface-light: rgb(243, 246, 248);
   
 
   /* .dark {
@@ -81,6 +84,38 @@ body {
 
 @utility border-gold {
   border-color: rgb(var(--color-gold));
+}
+
+@utility bg-medium-gray {
+  background-color: rgb(var(--color-medium-gray));
+}
+
+@utility bg-charcoal {
+  background-color: rgb(var(--color-charcoal));
+}
+
+@utility bg-surface-light {
+  background-color: rgb(var(--color-surface-light));
+}
+
+@utility text-medium-gray {
+  color: rgb(var(--color-medium-gray));
+}
+
+@utility text-charcoal {
+  color: rgb(var(--color-charcoal));
+}
+
+@utility border-medium-gray {
+  border-color: rgb(var(--color-medium-gray));
+}
+
+@utility shadow-soft {
+  box-shadow: 0px 4px 12px rgba(0, 0, 0, 0.05);
+}
+
+@utility shadow-soft-hover {
+  box-shadow: 0px 6px 16px rgba(0, 0, 0, 0.08);
 }
 
 .material-symbols-outlined {
