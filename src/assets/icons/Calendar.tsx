@@ -2,6 +2,7 @@ import type { SVGProps } from "react";
 import { iconSize } from ".";
 
 export const Calendar = (props: SVGProps<SVGSVGElement>) => {
+	const fill = props.fill || "currentColor";
 	return (
 		<svg
 			xmlns="http://www.w3.org/2000/svg"
@@ -11,7 +12,7 @@ export const Calendar = (props: SVGProps<SVGSVGElement>) => {
 			{...props}
 		>
 			<title>Calendar</title>
-			<g data-name="01 align center">
+			<g data-name="01 align center" fill={fill}>
 				<path d="M21 2h-3V0h-2v2H8V0H6v2H3a3 3 0 00-3 3v19h24V5a3 3 0 00-3-3zM2 5a1 1 0 011-1h18a1 1 0 011 1v3H2zm0 17V10h20v12z" />
 				<path d="M15 13H17V15H15z" />
 				<path d="M11 13H13V15H11z" />
