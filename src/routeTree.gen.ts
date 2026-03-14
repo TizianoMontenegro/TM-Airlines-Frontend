@@ -10,12 +10,18 @@
 
 import { Route as rootRouteImport } from './routes/__root'
 import { Route as ManageBookingRouteImport } from './routes/manage-booking'
+import { Route as FlightsRouteImport } from './routes/flights'
 import { Route as IndexRouteImport } from './routes/index'
 import { Route as AuthLoginRouteImport } from './routes/auth/login'
 
 const ManageBookingRoute = ManageBookingRouteImport.update({
   id: '/manage-booking',
   path: '/manage-booking',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const FlightsRoute = FlightsRouteImport.update({
+  id: '/flights',
+  path: '/flights',
   getParentRoute: () => rootRouteImport,
 } as any)
 const IndexRoute = IndexRouteImport.update({
@@ -31,30 +37,34 @@ const AuthLoginRoute = AuthLoginRouteImport.update({
 
 export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
+  '/flights': typeof FlightsRoute
   '/manage-booking': typeof ManageBookingRoute
   '/auth/login': typeof AuthLoginRoute
 }
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
+  '/flights': typeof FlightsRoute
   '/manage-booking': typeof ManageBookingRoute
   '/auth/login': typeof AuthLoginRoute
 }
 export interface FileRoutesById {
   __root__: typeof rootRouteImport
   '/': typeof IndexRoute
+  '/flights': typeof FlightsRoute
   '/manage-booking': typeof ManageBookingRoute
   '/auth/login': typeof AuthLoginRoute
 }
 export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
-  fullPaths: '/' | '/manage-booking' | '/auth/login'
+  fullPaths: '/' | '/flights' | '/manage-booking' | '/auth/login'
   fileRoutesByTo: FileRoutesByTo
-  to: '/' | '/manage-booking' | '/auth/login'
-  id: '__root__' | '/' | '/manage-booking' | '/auth/login'
+  to: '/' | '/flights' | '/manage-booking' | '/auth/login'
+  id: '__root__' | '/' | '/flights' | '/manage-booking' | '/auth/login'
   fileRoutesById: FileRoutesById
 }
 export interface RootRouteChildren {
   IndexRoute: typeof IndexRoute
+  FlightsRoute: typeof FlightsRoute
   ManageBookingRoute: typeof ManageBookingRoute
   AuthLoginRoute: typeof AuthLoginRoute
 }
@@ -66,6 +76,13 @@ declare module '@tanstack/react-router' {
       path: '/manage-booking'
       fullPath: '/manage-booking'
       preLoaderRoute: typeof ManageBookingRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/flights': {
+      id: '/flights'
+      path: '/flights'
+      fullPath: '/flights'
+      preLoaderRoute: typeof FlightsRouteImport
       parentRoute: typeof rootRouteImport
     }
     '/': {
@@ -87,6 +104,7 @@ declare module '@tanstack/react-router' {
 
 const rootRouteChildren: RootRouteChildren = {
   IndexRoute: IndexRoute,
+  FlightsRoute: FlightsRoute,
   ManageBookingRoute: ManageBookingRoute,
   AuthLoginRoute: AuthLoginRoute,
 }
