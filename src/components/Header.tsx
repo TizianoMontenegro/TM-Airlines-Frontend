@@ -60,7 +60,7 @@ export default function Header() {
 							<div className="absolute top-full left-0 mt-2 w-48 bg-white border border-gray-100 shadow-xl rounded-lg py-2 opacity-0 invisible group-hover:opacity-100 group-hover:visible transition-all z-50">
 								<a
 									className="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-50"
-									href="/flights/search"
+									href="/flights"
 								>
 									Search
 								</a>
