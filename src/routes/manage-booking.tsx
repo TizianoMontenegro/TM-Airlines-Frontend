@@ -1,5 +1,5 @@
 import { useQuery } from "@tanstack/react-query";
-import { createFileRoute } from "@tanstack/react-router";
+import { createFileRoute, useNavigate } from "@tanstack/react-router";
 import { useEffect, useId, useState } from "react";
 import {
 	GreenAngleRight,
@@ -64,11 +64,19 @@ const getStatusStyles = (status: string): string => {
 };
 
 function ManageBooking() {
+	const navigate = useNavigate();
 	const bookingRefId = useId();
 	const lastNameId = useId();
 
 	const [searchRef, setSearchRef] = useState("");
 	const [lastName, setLastName] = useState("");
+
+	useEffect(() => {
+		const token = localStorage.getItem("accessToken");
+		if (!token) {
+			navigate({ to: "/auth/login" });
+		}
+	}, [navigate]);
 
 	const { data, isLoading, isError, error } = useQuery({
 		queryKey: ["booking"],
