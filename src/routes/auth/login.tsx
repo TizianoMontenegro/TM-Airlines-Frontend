@@ -1,15 +1,23 @@
-import { createFileRoute } from "@tanstack/react-router";
-import { useState } from "react";
+import { createFileRoute, useNavigate } from "@tanstack/react-router";
+import { useEffect, useState } from "react";
 
 export const Route = createFileRoute("/auth/login")({
 	component: RouteComponent,
 });
 
 function RouteComponent() {
+	const navigate = useNavigate();
 	const [username, setUsername] = useState("");
 	const [password, setPassword] = useState("");
 	const [error, setError] = useState<string | null>(null);
 	const [loading, setLoading] = useState(false);
+
+	useEffect(() => {
+		const token = localStorage.getItem("accessToken");
+		if (token) {
+			navigate({ to: "/manage-booking" });
+		}
+	}, [navigate]);
 
 	const loginUser = async (username: string, password: string) => {
 		const response = await fetch("http://127.0.0.1:8000/api/v1/auth/login/", {
@@ -39,7 +47,7 @@ function RouteComponent() {
 			localStorage.setItem("accessToken", tokens.access);
 			localStorage.setItem("refreshToken", tokens.refresh);
 
-			console.log("Login successful");
+			navigate({ to: "/manage-booking" });
 		} catch (err: any) {
 			setError(err.message);
 		} finally {
