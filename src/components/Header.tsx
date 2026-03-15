@@ -1,11 +1,28 @@
-import { Link } from "@tanstack/react-router";
+import { Link, useNavigate, useRouterState } from "@tanstack/react-router";
 import { Home, Menu, X } from "lucide-react";
-import { useId, useState } from "react";
+import { useEffect, useId, useState } from "react";
 
 import { LightAngleDown, LightUser, YellowMedal } from "../assets/icons";
 
 export default function Header() {
+	const navigate = useNavigate();
+	const routerState = useRouterState();
 	const [isOpen, setIsOpen] = useState(false);
+	const [isLoggedIn, setIsLoggedIn] = useState(
+		() =>
+			typeof window !== "undefined" && !!localStorage.getItem("accessToken"),
+	);
+
+	// biome-ignore lint/correctness/useExhaustiveDependencies: Need to check auth state on every navigation
+	useEffect(() => {
+		setIsLoggedIn(!!localStorage.getItem("accessToken"));
+	}, [routerState.location.href]);
+
+	const handleLogout = () => {
+		localStorage.removeItem("accessToken");
+		localStorage.removeItem("refreshToken");
+		navigate({ to: "/" });
+	};
 
 	return (
 		<>
@@ -120,12 +137,23 @@ export default function Header() {
 					</nav>
 
 					<div className="flex items-center gap-4">
-						<a
-							href="/auth/login/"
-							className="hidden sm:flex items-center justify-center rounded-lg h-10 px-6 bg-primary text-white text-sm font-bold tracking-wide hover:bg-opacity-90 transition-all"
-						>
-							Login
-						</a>
+						{!isLoggedIn && (
+							<a
+								href="/auth/login/"
+								className="hidden sm:flex items-center justify-center rounded-lg h-10 px-6 bg-primary text-white text-sm font-bold tracking-wide hover:bg-opacity-90 transition-all"
+							>
+								Login
+							</a>
+						)}
+						{isLoggedIn && (
+							<button
+								type="button"
+								onClick={handleLogout}
+								className="hidden sm:flex items-center justify-center rounded-lg h-10 px-6 bg-accent-red text-white text-sm font-bold tracking-wide hover:opacity-90 transition-all"
+							>
+								Logout
+							</button>
+						)}
 						<a href="/profile/">
 							<LightUser />
 						</a>
