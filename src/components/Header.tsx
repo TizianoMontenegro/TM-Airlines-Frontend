@@ -138,12 +138,20 @@ export default function Header() {
 
 					<div className="flex items-center gap-4">
 						{!isLoggedIn && (
-							<a
-								href="/auth/login/"
-								className="hidden sm:flex items-center justify-center rounded-lg h-10 px-6 bg-primary text-white text-sm font-bold tracking-wide hover:bg-opacity-90 transition-all"
-							>
-								Login
-							</a>
+							<>
+								<a
+									href="/auth/login/"
+									className="hidden sm:flex items-center justify-center rounded-lg h-10 px-6 bg-primary text-white text-sm font-bold tracking-wide hover:bg-opacity-90 transition-all"
+								>
+									Login
+								</a>
+								<a
+									href="/auth/signup/"
+									className="hidden sm:flex items-center justify-center rounded-lg h-10 px-6 border border-primary text-primary text-sm font-bold tracking-wide hover:bg-primary hover:text-white transition-all"
+								>
+									Sign Up
+								</a>
+							</>
 						)}
 						{isLoggedIn && (
 							<button
