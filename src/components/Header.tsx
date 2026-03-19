@@ -3,24 +3,22 @@ import { Home, Menu, X } from "lucide-react";
 import { useEffect, useId, useState } from "react";
 
 import { LightAngleDown, LightUser, YellowMedal } from "../assets/icons";
+import { useAuthStore } from "../stores/authStore";
 
 export default function Header() {
 	const navigate = useNavigate();
 	const routerState = useRouterState();
 	const [isOpen, setIsOpen] = useState(false);
-	const [isLoggedIn, setIsLoggedIn] = useState(
-		() =>
-			typeof window !== "undefined" && !!localStorage.getItem("accessToken"),
-	);
+	const { accessToken, logout } = useAuthStore();
+	const isLoggedIn = !!accessToken;
 
 	// biome-ignore lint/correctness/useExhaustiveDependencies: Need to check auth state on every navigation
 	useEffect(() => {
-		setIsLoggedIn(!!localStorage.getItem("accessToken"));
-	}, [routerState.location.href]);
+		// Force re-render on navigation to sync with auth state
+	}, [routerState.location.href, accessToken]);
 
 	const handleLogout = () => {
-		localStorage.removeItem("accessToken");
-		localStorage.removeItem("refreshToken");
+		logout();
 		navigate({ to: "/" });
 	};
 
@@ -91,7 +89,7 @@ export default function Header() {
 						</div>
 
 						<Link
-							to="/manage-booking"
+							to="/dashboard/manage-booking"
 							className="text-sm font-semibold hover:text-primary transition-colors"
 						>
 							Manage Booking
@@ -140,13 +138,13 @@ export default function Header() {
 						{!isLoggedIn && (
 							<>
 								<a
-									href="/auth/login/"
+									href="/auth/login"
 									className="hidden sm:flex items-center justify-center rounded-lg h-10 px-6 bg-primary text-white text-sm font-bold tracking-wide hover:bg-opacity-90 transition-all"
 								>
 									Login
 								</a>
 								<a
-									href="/auth/signup/"
+									href="/auth/signup"
 									className="hidden sm:flex items-center justify-center rounded-lg h-10 px-6 border border-primary text-primary text-sm font-bold tracking-wide hover:bg-primary hover:text-white transition-all"
 								>
 									Sign Up
@@ -162,7 +160,7 @@ export default function Header() {
 								Logout
 							</button>
 						)}
-						<a href="/profile/">
+						<a href="/dashboard/profile">
 							<LightUser />
 						</a>
 					</div>
