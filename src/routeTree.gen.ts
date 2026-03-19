@@ -9,17 +9,13 @@
 // Additionally, you should also exclude this file from your linter and/or formatter to prevent it from being checked or modified.
 
 import { Route as rootRouteImport } from './routes/__root'
-import { Route as ManageBookingRouteImport } from './routes/manage-booking'
 import { Route as FlightsRouteImport } from './routes/flights'
 import { Route as IndexRouteImport } from './routes/index'
+import { Route as DashboardProfileRouteImport } from './routes/dashboard/profile'
+import { Route as DashboardManageBookingRouteImport } from './routes/dashboard/manage-booking'
 import { Route as AuthSignupRouteImport } from './routes/auth/signup'
 import { Route as AuthLoginRouteImport } from './routes/auth/login'
 
-const ManageBookingRoute = ManageBookingRouteImport.update({
-  id: '/manage-booking',
-  path: '/manage-booking',
-  getParentRoute: () => rootRouteImport,
-} as any)
 const FlightsRoute = FlightsRouteImport.update({
   id: '/flights',
   path: '/flights',
@@ -28,6 +24,16 @@ const FlightsRoute = FlightsRouteImport.update({
 const IndexRoute = IndexRouteImport.update({
   id: '/',
   path: '/',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const DashboardProfileRoute = DashboardProfileRouteImport.update({
+  id: '/dashboard/profile',
+  path: '/dashboard/profile',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const DashboardManageBookingRoute = DashboardManageBookingRouteImport.update({
+  id: '/dashboard/manage-booking',
+  path: '/dashboard/manage-booking',
   getParentRoute: () => rootRouteImport,
 } as any)
 const AuthSignupRoute = AuthSignupRouteImport.update({
@@ -44,61 +50,66 @@ const AuthLoginRoute = AuthLoginRouteImport.update({
 export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
   '/flights': typeof FlightsRoute
-  '/manage-booking': typeof ManageBookingRoute
   '/auth/login': typeof AuthLoginRoute
   '/auth/signup': typeof AuthSignupRoute
+  '/dashboard/manage-booking': typeof DashboardManageBookingRoute
+  '/dashboard/profile': typeof DashboardProfileRoute
 }
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
   '/flights': typeof FlightsRoute
-  '/manage-booking': typeof ManageBookingRoute
   '/auth/login': typeof AuthLoginRoute
   '/auth/signup': typeof AuthSignupRoute
+  '/dashboard/manage-booking': typeof DashboardManageBookingRoute
+  '/dashboard/profile': typeof DashboardProfileRoute
 }
 export interface FileRoutesById {
   __root__: typeof rootRouteImport
   '/': typeof IndexRoute
   '/flights': typeof FlightsRoute
-  '/manage-booking': typeof ManageBookingRoute
   '/auth/login': typeof AuthLoginRoute
   '/auth/signup': typeof AuthSignupRoute
+  '/dashboard/manage-booking': typeof DashboardManageBookingRoute
+  '/dashboard/profile': typeof DashboardProfileRoute
 }
 export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
   fullPaths:
     | '/'
     | '/flights'
-    | '/manage-booking'
     | '/auth/login'
     | '/auth/signup'
+    | '/dashboard/manage-booking'
+    | '/dashboard/profile'
   fileRoutesByTo: FileRoutesByTo
-  to: '/' | '/flights' | '/manage-booking' | '/auth/login' | '/auth/signup'
+  to:
+    | '/'
+    | '/flights'
+    | '/auth/login'
+    | '/auth/signup'
+    | '/dashboard/manage-booking'
+    | '/dashboard/profile'
   id:
     | '__root__'
     | '/'
     | '/flights'
-    | '/manage-booking'
     | '/auth/login'
     | '/auth/signup'
+    | '/dashboard/manage-booking'
+    | '/dashboard/profile'
   fileRoutesById: FileRoutesById
 }
 export interface RootRouteChildren {
   IndexRoute: typeof IndexRoute
   FlightsRoute: typeof FlightsRoute
-  ManageBookingRoute: typeof ManageBookingRoute
   AuthLoginRoute: typeof AuthLoginRoute
   AuthSignupRoute: typeof AuthSignupRoute
+  DashboardManageBookingRoute: typeof DashboardManageBookingRoute
+  DashboardProfileRoute: typeof DashboardProfileRoute
 }
 
 declare module '@tanstack/react-router' {
   interface FileRoutesByPath {
-    '/manage-booking': {
-      id: '/manage-booking'
-      path: '/manage-booking'
-      fullPath: '/manage-booking'
-      preLoaderRoute: typeof ManageBookingRouteImport
-      parentRoute: typeof rootRouteImport
-    }
     '/flights': {
       id: '/flights'
       path: '/flights'
@@ -111,6 +122,20 @@ declare module '@tanstack/react-router' {
       path: '/'
       fullPath: '/'
       preLoaderRoute: typeof IndexRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/dashboard/profile': {
+      id: '/dashboard/profile'
+      path: '/dashboard/profile'
+      fullPath: '/dashboard/profile'
+      preLoaderRoute: typeof DashboardProfileRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/dashboard/manage-booking': {
+      id: '/dashboard/manage-booking'
+      path: '/dashboard/manage-booking'
+      fullPath: '/dashboard/manage-booking'
+      preLoaderRoute: typeof DashboardManageBookingRouteImport
       parentRoute: typeof rootRouteImport
     }
     '/auth/signup': {
@@ -133,9 +158,10 @@ declare module '@tanstack/react-router' {
 const rootRouteChildren: RootRouteChildren = {
   IndexRoute: IndexRoute,
   FlightsRoute: FlightsRoute,
-  ManageBookingRoute: ManageBookingRoute,
   AuthLoginRoute: AuthLoginRoute,
   AuthSignupRoute: AuthSignupRoute,
+  DashboardManageBookingRoute: DashboardManageBookingRoute,
+  DashboardProfileRoute: DashboardProfileRoute,
 }
 export const routeTree = rootRouteImport
   ._addFileChildren(rootRouteChildren)
