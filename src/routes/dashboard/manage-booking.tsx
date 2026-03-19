@@ -1,6 +1,5 @@
-import { useQuery } from "@tanstack/react-query";
-import { createFileRoute, useNavigate } from "@tanstack/react-router";
-import { useEffect, useId, useState } from "react";
+import { createFileRoute, redirect } from "@tanstack/react-router";
+import { useId, useState } from "react";
 import {
 	GreenAngleRight,
 	LightArrowRight,
@@ -9,8 +8,21 @@ import {
 	SmallUserCheck,
 	YellowMedal2,
 } from "@/assets/icons";
+import { useBookings } from "@/hooks/useBookings";
+import { useAuthStore } from "@/stores/authStore";
 
-export const Route = createFileRoute("/manage-booking")({
+export const Route = createFileRoute("/dashboard/manage-booking")({
+	beforeLoad: ({ location }) => {
+		const { accessToken } = useAuthStore.getState();
+		if (!accessToken) {
+			throw redirect({
+				to: "/auth/login",
+				search: {
+					redirect: location.href,
+				},
+			});
+		}
+	},
 	component: ManageBooking,
 });
 
@@ -24,23 +36,6 @@ interface Booking {
 }
 
 type BookingResponse = Booking[];
-
-const fetchBooking = async (): Promise<BookingResponse> => {
-	const accessToken = localStorage.getItem("accessToken");
-	const response = await fetch("http://127.0.0.1:8000/api/v1/bookings/", {
-		method: "GET",
-		headers: {
-			Authorization: `Bearer ${accessToken}`,
-		},
-	});
-
-	if (!response.ok) {
-		const errorData = await response.json();
-		throw new Error(errorData.detail || "Booking not found");
-	}
-
-	return response.json();
-};
 
 const formatDate = (dateString: string): string => {
 	const date = new Date(dateString);
@@ -64,26 +59,18 @@ const getStatusStyles = (status: string): string => {
 };
 
 function ManageBooking() {
-	const navigate = useNavigate();
 	const bookingRefId = useId();
 	const lastNameId = useId();
 
 	const [searchRef, setSearchRef] = useState("");
 	const [lastName, setLastName] = useState("");
 
-	useEffect(() => {
-		const token = localStorage.getItem("accessToken");
-		if (!token) {
-			navigate({ to: "/auth/login" });
-		}
-	}, [navigate]);
-
-	const { data, isLoading, isError, error } = useQuery({
-		queryKey: ["booking"],
-		queryFn: fetchBooking,
-	});
-
-	useEffect(() => console.log(data), [data]);
+	const { data, isLoading, isError, error } = useBookings() as {
+		data: BookingResponse | undefined;
+		isLoading: boolean;
+		isError: boolean;
+		error: Error | null;
+	};
 
 	const handleSearch = (e: React.FormEvent) => {
 		e.preventDefault();
