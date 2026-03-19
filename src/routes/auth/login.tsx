@@ -1,55 +1,68 @@
-import { createFileRoute, useNavigate } from "@tanstack/react-router";
-import { useEffect, useState } from "react";
+import { createFileRoute, redirect, useNavigate } from "@tanstack/react-router";
+import { useState } from "react";
+import { z } from "zod";
+
+import { useAuthStore } from "@/stores/authStore";
+
+const loginSearchSchema = z.object({
+	redirect: z.string().optional().catch(""),
+});
 
 export const Route = createFileRoute("/auth/login")({
+	validateSearch: loginSearchSchema,
+	beforeLoad: () => {
+		const { accessToken } = useAuthStore.getState();
+		if (accessToken) {
+			throw redirect({ to: "/dashboard/manage-booking" });
+		}
+	},
 	component: RouteComponent,
 });
 
 function RouteComponent() {
 	const navigate = useNavigate();
-	const [username, setUsername] = useState("");
+	const { redirect } = Route.useSearch();
+	const setAuth = useAuthStore((state) => state.setAuth);
+
+	const [email, setEmail] = useState("");
 	const [password, setPassword] = useState("");
 	const [error, setError] = useState<string | null>(null);
 	const [loading, setLoading] = useState(false);
 
-	useEffect(() => {
-		const token = localStorage.getItem("accessToken");
-		if (token) {
-			navigate({ to: "/manage-booking" });
-		}
-	}, [navigate]);
-
-	const loginUser = async (username: string, password: string) => {
-		const response = await fetch("http://127.0.0.1:8000/api/v1/auth/login/", {
-			method: "POST",
-			headers: {
-				"Content-Type": "application/json",
-			},
-			body: JSON.stringify({ username, password }),
-		});
-
-		if (!response.ok) {
-			const errorData = await response.json();
-			throw new Error(errorData.detail || "Login failed");
-		}
-
-		return response.json();
-	};
-
 	const handleLogin = async (e: React.FormEvent) => {
-		e.preventDefault(); // prevent page reload
+		e.preventDefault();
 		setError(null);
 		setLoading(true);
 
 		try {
-			const tokens = await loginUser(username, password);
+			const response = await fetch("http://127.0.0.1:8000/api/v1/auth/login/", {
+				method: "POST",
+				headers: {
+					"Content-Type": "application/json",
+				},
+				body: JSON.stringify({ username: email, password }),
+			});
 
-			localStorage.setItem("accessToken", tokens.access);
-			localStorage.setItem("refreshToken", tokens.refresh);
+			if (!response.ok) {
+				const errorData = await response.json();
+				throw new Error(errorData.detail || "Login failed");
+			}
 
-			navigate({ to: "/manage-booking" });
-		} catch (err: any) {
-			setError(err.message);
+			const data = await response.json();
+
+			setAuth({
+				access: data.access,
+				refresh: data.refresh,
+				user: data.user,
+			});
+
+			navigate({ to: redirect || "/dashboard/manage-booking", replace: true });
+		} catch (err: unknown) {
+			if (err instanceof Error) {
+				setError(err.message);
+			} else {
+				setError("An unexpected error occurred");
+			}
 		} finally {
 			setLoading(false);
 		}
@@ -63,13 +76,15 @@ function RouteComponent() {
 					Sign in to your account
 				</p>
 
+				{redirect && (
+					<div className="mb-4 p-3 bg-gold/10 text-gold text-sm rounded-md">
+						Please sign in to access the requested page
+					</div>
+				)}
+
 				<form onSubmit={handleLogin} className="space-y-6">
-					{/* Username / Email */}
 					<div className="flex flex-col gap-2">
-						<label
-							className="text-sm font-semibold uppercase"
-							htmlFor="username"
-						>
+						<label className="text-sm font-semibold uppercase" htmlFor="email">
 							Username or Email
 						</label>
 						{/** biome-ignore lint/correctness/useUniqueElementIds: Need of refer label with input */}
@@ -77,15 +92,14 @@ function RouteComponent() {
 							type="text"
 							name="username"
 							required
-							placeholder="Enter your username"
-							id="username"
+							placeholder="Enter your username or email"
+							id="email"
 							className="w-full h-12 px-4 border border-gray-300 rounded-md focus:ring-2 focus:ring-green-600 focus:outline-none focus:border-0 placeholder-gray-400"
-							value={username}
-							onChange={(e) => setUsername(e.target.value)}
+							value={email}
+							onChange={(e) => setEmail(e.target.value)}
 						/>
 					</div>
 
-					{/* Password */}
 					<div className="flex flex-col gap-2">
 						<label
 							className="text-sm font-semibold uppercase"
@@ -106,7 +120,6 @@ function RouteComponent() {
 						/>
 					</div>
 
-					{/* Submit Button */}
 					{error && <p style={{ color: "red" }}>{error}</p>}
 
 					<button
