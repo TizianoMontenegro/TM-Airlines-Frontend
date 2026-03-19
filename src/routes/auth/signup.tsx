@@ -1,13 +1,23 @@
-import { createFileRoute, useNavigate } from "@tanstack/react-router";
+import { createFileRoute, redirect, useNavigate } from "@tanstack/react-router";
 import { Eye, EyeOff } from "lucide-react";
-import { useEffect, useState } from "react";
+import { useState } from "react";
+
+import { useAuthStore } from "@/stores/authStore";
 
 export const Route = createFileRoute("/auth/signup")({
+	beforeLoad: () => {
+		const { accessToken } = useAuthStore.getState();
+		if (accessToken) {
+			throw redirect({ to: "/dashboard/manage-booking" });
+		}
+	},
 	component: RouteComponent,
 });
 
 function RouteComponent() {
 	const navigate = useNavigate();
+	const setAuth = useAuthStore((state) => state.setAuth);
+
 	const [email, setEmail] = useState("");
 	const [firstName, setFirstName] = useState("");
 	const [lastName, setLastName] = useState("");
@@ -18,47 +28,6 @@ function RouteComponent() {
 	const [showPasswordConfirm, setShowPasswordConfirm] = useState(false);
 	const [error, setError] = useState<string | null>(null);
 	const [loading, setLoading] = useState(false);
-
-	useEffect(() => {
-		const token = localStorage.getItem("accessToken");
-		if (token) {
-			navigate({ to: "/manage-booking" });
-		}
-	}, [navigate]);
-
-	const registerUser = async (
-		email: string,
-		firstName: string,
-		lastName: string,
-		dateOfBirth: string,
-		password: string,
-		passwordConfirm: string,
-	) => {
-		const response = await fetch(
-			"http://127.0.0.1:8000/api/v1/auth/register/",
-			{
-				method: "POST",
-				headers: {
-					"Content-Type": "application/json",
-				},
-				body: JSON.stringify({
-					email,
-					first_name: firstName,
-					last_name: lastName,
-					date_of_birth: dateOfBirth,
-					password,
-					password_confirm: passwordConfirm,
-				}),
-			},
-		);
-
-		if (!response.ok) {
-			const errorData = await response.json();
-			throw new Error(errorData.detail || "Registration failed");
-		}
-
-		return response.json();
-	};
 
 	const handleSignup = async (e: React.FormEvent) => {
 		e.preventDefault();
@@ -72,14 +41,28 @@ function RouteComponent() {
 		}
 
 		try {
-			await registerUser(
-				email,
-				firstName,
-				lastName,
-				dateOfBirth,
-				password,
-				passwordConfirm,
+			const response = await fetch(
+				"http://127.0.0.1:8000/api/v1/auth/register/",
+				{
+					method: "POST",
+					headers: {
+						"Content-Type": "application/json",
+					},
+					body: JSON.stringify({
+						email,
+						first_name: firstName,
+						last_name: lastName,
+						date_of_birth: dateOfBirth,
+						password,
+						password_confirm: passwordConfirm,
+					}),
+				},
 			);
+
+			if (!response.ok) {
+				const errorData = await response.json();
+				throw new Error(errorData.detail || "Registration failed");
+			}
 
 			const loginResponse = await fetch(
 				"http://127.0.0.1:8000/api/v1/auth/login/",
@@ -97,10 +80,13 @@ function RouteComponent() {
 			}
 
 			const tokens = await loginResponse.json();
-			localStorage.setItem("accessToken", tokens.access);
-			localStorage.setItem("refreshToken", tokens.refresh);
+			setAuth({
+				access: tokens.access,
+				refresh: tokens.refresh,
+				user: tokens.user,
+			});
 
-			navigate({ to: "/manage-booking" });
+			navigate({ to: "/dashboard/manage-booking", replace: true });
 		} catch (err: unknown) {
 			if (err instanceof Error) {
 				setError(err.message);
@@ -125,7 +111,7 @@ function RouteComponent() {
 						<label className="text-sm font-semibold uppercase" htmlFor="email">
 							Email
 						</label>
-						{/* biome-ignore lint/correctness/useUniqueElementIds: Need of refer label with input */}
+						{/** biome-ignore lint/correctness/useUniqueElementIds: Need of refer label with input */}
 						<input
 							type="email"
 							name="email"
@@ -146,7 +132,7 @@ function RouteComponent() {
 							>
 								First Name
 							</label>
-							{/* biome-ignore lint/correctness/useUniqueElementIds: Need of refer label with input */}
+							{/** biome-ignore lint/correctness/useUniqueElementIds: Need of refer label with input */}
 							<input
 								type="text"
 								name="firstName"
@@ -165,7 +151,7 @@ function RouteComponent() {
 							>
 								Last Name
 							</label>
-							{/* biome-ignore lint/correctness/useUniqueElementIds: Need of refer label with input */}
+							{/** biome-ignore lint/correctness/useUniqueElementIds: Need of refer label with input */}
 							<input
 								type="text"
 								name="lastName"
@@ -185,7 +171,7 @@ function RouteComponent() {
 						>
 							Date of Birth
 						</label>
-						{/* biome-ignore lint/correctness/useUniqueElementIds: Need of refer label with input */}
+						{/** biome-ignore lint/correctness/useUniqueElementIds: Need of refer label with input */}
 						<input
 							type="date"
 							name="dateOfBirth"
@@ -204,7 +190,7 @@ function RouteComponent() {
 							Password
 						</label>
 						<div className="relative">
-							{/* biome-ignore lint/correctness/useUniqueElementIds: Need of refer label with input */}
+							{/** biome-ignore lint/correctness/useUniqueElementIds: Need of refer label with input */}
 							<input
 								type={showPassword ? "text" : "password"}
 								name="password"
@@ -233,7 +219,7 @@ function RouteComponent() {
 							Confirm Password
 						</label>
 						<div className="relative">
-							{/* biome-ignore lint/correctness/useUniqueElementIds: Need of refer label with input */}
+							{/** biome-ignore lint/correctness/useUniqueElementIds: Need of refer label with input */}
 							<input
 								type={showPasswordConfirm ? "text" : "password"}
 								name="passwordConfirm"
@@ -266,7 +252,7 @@ function RouteComponent() {
 
 					<p className="text-center text-sm text-gray-500">
 						Already have an account?{" "}
-						<a href="/auth/login/" className="text-primary hover:underline">
+						<a href="/auth/login" className="text-primary hover:underline">
 							Login
 						</a>
 					</p>
