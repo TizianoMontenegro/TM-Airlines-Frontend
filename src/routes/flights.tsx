@@ -8,6 +8,7 @@ import {
 	Medal,
 	MoreVert,
 } from "@/assets/icons";
+import { API_URL } from "@/lib/apiClient";
 import type { Flights } from "@/types";
 
 export const Route = createFileRoute("/flights")({
@@ -15,7 +16,7 @@ export const Route = createFileRoute("/flights")({
 });
 
 const fetchFlights = async () => {
-	const response = await fetch("http://127.0.0.1:8000/api/v1/flights/");
+	const response = await fetch(`${API_URL}/flights/`);
 
 	if (!response.ok) {
 		const errorData = await response.json();
