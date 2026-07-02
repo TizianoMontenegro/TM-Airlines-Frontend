@@ -2,6 +2,7 @@ import { createFileRoute, redirect, useNavigate } from "@tanstack/react-router";
 import { useState } from "react";
 import { z } from "zod";
 
+import { API_URL } from "@/lib/apiClient";
 import { useAuthStore } from "@/stores/authStore";
 
 const loginSearchSchema = z.object({
@@ -35,7 +36,7 @@ function RouteComponent() {
 		setLoading(true);
 
 		try {
-			const response = await fetch("http://127.0.0.1:8000/api/v1/auth/login/", {
+			const response = await fetch(`${API_URL}/auth/login/`, {
 				method: "POST",
 				headers: {
 					"Content-Type": "application/json",
