@@ -2,6 +2,7 @@ import { createFileRoute, redirect, useNavigate } from "@tanstack/react-router";
 import { Eye, EyeOff } from "lucide-react";
 import { useState } from "react";
 
+import { API_URL } from "@/lib/apiClient";
 import { useAuthStore } from "@/stores/authStore";
 
 export const Route = createFileRoute("/auth/signup")({
@@ -42,7 +43,7 @@ function RouteComponent() {
 
 		try {
 			const response = await fetch(
-				"http://127.0.0.1:8000/api/v1/auth/register/",
+				`${API_URL}/auth/register/`,
 				{
 					method: "POST",
 					headers: {
@@ -65,7 +66,7 @@ function RouteComponent() {
 			}
 
 			const loginResponse = await fetch(
-				"http://127.0.0.1:8000/api/v1/auth/login/",
+				`${API_URL}/auth/login/`,
 				{
 					method: "POST",
 					headers: {
