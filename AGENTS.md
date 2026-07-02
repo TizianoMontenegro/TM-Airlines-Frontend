@@ -188,7 +188,7 @@ src/
 
 ## 4. API Integration
 
-- API base URL: `http://127.0.0.1:8000/api/v1/`
+- API base URL: Configured via `VITE_API_URL` in `.env` (default: `https://drecognizer-docker.onrender.com/api/v1/`)
 - Authentication tokens stored in localStorage
 - Follow RESTful conventions for endpoints
 
