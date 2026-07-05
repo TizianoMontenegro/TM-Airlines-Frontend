@@ -191,7 +191,7 @@ function PanelContent({
 				</button>
 			</div>
 
-			<div className="flex-1 overflow-y-auto px-5 py-4">
+			<div className="flex-1 max-h-[calc(100vh-140.70px)] overflow-y-auto px-5 py-4">
 				{messages.length === 0 && !isLoading && (
 					<div className="flex flex-col items-center justify-center h-full text-center">
 						<MessageCircle className="size-12 text-primary/30 mb-4" />
